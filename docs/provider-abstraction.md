@@ -30,4 +30,4 @@ At a public level, the provider layer is responsible for:
 
 A Blender operation should still be a Blender operation whether the reasoning model comes from one provider or another.
 
-This repository does not publish credential routing, private authentication flows, token locations, or provider-specific production internals.
+This repository does not publish private authentication, token-storage, or provider-specific production internals.
