@@ -1,49 +1,49 @@
 # Error model
 
-A useful integration should fail in ways that are understandable to both users and software.
+Creative automation needs errors that explain both **what failed** and **what may have changed**.
 
-## Recommended public error categories
+## Useful public categories
 
 ### Invalid input
 
-The request is understood, but one or more parameters are not acceptable.
+The capability is known, but one or more values are not acceptable.
 
 ### Unsupported operation
 
-The requested action is not exposed by the integration.
+The active integration does not expose the requested behavior.
 
 ### Missing application state
 
-The request depends on state that is absent, such as no selected object or no active document.
+The operation depends on state that is absent, such as a selection or active document.
 
-### Application rejected operation
+### Application rejection
 
-The integration attempted a valid host action, but the application rejected it.
+The request reached the host application, but the host could not complete it.
 
 ### Compatibility issue
 
-The installed application version or environment does not support the requested behavior.
+The behavior is unavailable in the current application version or environment.
 
-### Permission or access issue
+### Permission or approval required
 
-The operation requires access that is unavailable.
+The operation cannot proceed until the user grants access or confirms the action.
 
 ### Execution failure
 
-An unexpected application-side failure occurred.
+The integration encountered an unexpected runtime problem.
 
-## Error response guidance
+### Cancelled or interrupted
 
-A useful error should answer:
+The user or runtime stopped work before normal completion.
+
+## Good error responses
+
+A good error should answer:
 
 1. What failed?
 2. Why, if known?
-3. Was anything changed?
+3. Did anything change?
 4. Can the user recover?
-5. Is retrying reasonable?
+5. Is retrying appropriate?
 
-## Partial work
-
-If an operation changes application state before later failing, the result should make that partial state explicit.
-
-The public error model is intentionally descriptive rather than a production wire-format specification.
+Partial work should never be silently presented as complete.

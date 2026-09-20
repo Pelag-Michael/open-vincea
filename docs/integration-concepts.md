@@ -1,41 +1,40 @@
 # Integration concepts
 
-Vincea application integrations connect AI-assisted workflows to professional creative software.
+Vincea is most useful when it can interact with a creative application through that application's own extension or scripting surface.
 
-This document describes the developer-facing concepts only. It is not an executable SDK or a production interface specification.
+## Integration responsibilities
 
-## Capabilities
+A good application integration should provide:
 
-An integration advertises a bounded set of things that can be done in the target application.
+- application identity;
+- readable application context;
+- bounded actions;
+- structured results;
+- compatibility information;
+- safe failure behavior.
 
-Examples at a conceptual level include:
+## Direct application understanding
 
-- reading selected application state;
-- creating or modifying supported objects;
-- invoking narrowly scoped application operations;
-- returning structured results.
+Where possible, Vincea should work with domain objects instead of only pixels.
 
-## Actions and results
+Examples include:
 
-A useful integration keeps actions explicit and results understandable. Inputs should be validated, failures should be reported clearly, and side effects should be documented.
+- scene objects and materials;
+- document layers and selections;
+- timeline clips;
+- CAD entities;
+- render or export state.
 
-## Lifecycle
+## Thin host bridge, rich runtime semantics
 
-A typical developer-facing lifecycle is:
+Application-side code should stay focused on interacting with the host application.
 
-1. the application integration becomes available;
-2. supported capabilities are exposed;
-3. a request selects an appropriate capability;
-4. parameters are validated;
-5. the application operation runs;
-6. a result is returned.
+Higher-level reasoning, user interaction, safety policy, and cross-cutting runtime behavior belong outside the host application whenever practical.
 
-The exact production interface and serialization are outside the scope of this repository.
+## Screen-based fallback
 
-## Testing philosophy
+Some workflows do not expose a sufficient application API. Screen interaction can provide a fallback, but it carries different reliability and safety characteristics and should not be confused with deep application integration.
 
-Integration tests should focus on predictable behavior, malformed input handling, application-version compatibility, safe failure, and clear reporting of side effects.
+## Integration maturity
 
-## Example material
-
-Public tutorials may explain how integrations are designed and reviewed, but should not be treated as a published implementation of Vincea's internal application-integration framework.
+Having an integration directory or prototype does not prove equal depth across applications. Public support claims should reflect tested reality.

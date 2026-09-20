@@ -1,41 +1,31 @@
 # Security for integration authors
 
-Application integrations can receive model-produced actions and can modify valuable professional work. Their design should assume that model output may be incorrect, malformed, or overly broad.
+Application integrations sit close to valuable user work.
 
-## Minimize authority
+## Treat model output as untrusted input
 
-Expose the smallest practical set of operations.
+Validate operation names, identifiers, paths, numeric ranges, and object types.
 
-## Validate all inputs
+## Keep authority narrow
 
-Validate names, identifiers, paths, numeric ranges, enumerations, and object types before execution.
+Prefer explicit host operations over a broad escape hatch.
 
-## Handle file operations carefully
+## Make destructive behavior obvious
 
-For integrations that read or write files:
+Saving, overwriting, deleting, batch-editing, exporting, and replacing assets should be documented.
 
-- document allowed locations or restrictions;
-- avoid accidental overwrite;
-- report the final target;
-- make destructive behavior explicit;
-- prefer user-controlled destinations where appropriate.
+## Preserve a recovery story
 
-## Avoid unnecessary network exposure
+Where practical, support backups, snapshots, undo, version control, or application-native recovery.
 
-If the host integration only needs local communication, do not expose it broadly without a documented reason.
+## Keep network exposure deliberate
 
-## Protect secrets
+Do not expose an application integration broadly when a local-only interface is sufficient.
 
-Do not store credentials in public repositories, example files, screenshots, logs, or test fixtures.
+## Review logs and fixtures
 
-## Treat logs as data
+Logs can contain project names, paths, user content, screenshots, or application state.
 
-Logs can contain project names, file paths, user content, and application state. Review them before publication.
+## Fail visibly
 
-## Make failure visible
-
-Silent failure can be dangerous in professional workflows. Return clear failure information and indicate whether state may have changed.
-
-## Backups and version control
-
-For workflows with meaningful side effects, recommend appropriate backup, version-control, or application-native recovery practices.
+If the integration cannot determine whether an operation succeeded, return an ambiguous/failure state rather than reporting success.

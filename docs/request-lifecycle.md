@@ -1,49 +1,55 @@
 # Request lifecycle
 
-This document describes the public conceptual lifecycle of a Vincea request.
+A Vincea request is a loop, not just a single model call.
 
 ```mermaid
 flowchart LR
-    A[User Intent] --> B[Application Context]
-    B --> C[AI Reasoning]
-    C --> D[Proposed Action]
-    D --> E[Validation]
-    E --> F[Application Integration]
-    F --> G[Creative Application]
-    G --> H[Structured Result]
-    H --> I[Session Continuity]
+    A[User Goal] --> B[Session-scoped Job]
+    B --> C[Context]
+    C --> D[Model Turn]
+    D --> E{Action needed?}
+    E -- No --> J[Final Response]
+    E -- Yes --> F[Capability Request]
+    F --> G[Policy / Approval]
+    G --> H[Application or Global Execution]
+    H --> I[Observed Result]
+    I --> K[Verify / Continue]
+    K --> D
+    K --> J
 ```
 
-## 1. User intent
+## 1. Accept the work
 
-The process starts with the user's request. The request may refer to current application state, prior interaction context, or a desired creative outcome.
+The request is associated with a session and becomes a runtime job.
 
-## 2. Application context
+The job carries enough non-secret identity to keep work tied to the intended session, application context, execution route, and selected model.
 
-Relevant application information is made available at a conceptual level so the model can reason about the actual working environment.
+## 2. Compose context
 
-## 3. AI reasoning
+The model receives the user request together with the relevant session, application, capability, and workflow context.
 
-The model interprets the request and decides whether the answer should be informational, operational, or a combination of both.
+## 3. Model turn
 
-## 4. Proposed action
+The model can either answer directly or request one or more supported actions.
 
-When application work is needed, the model proposes a supported action with parameters.
+## 4. Policy and user involvement
 
-## 5. Validation
+Before an action reaches the target environment, the runtime evaluates whether it is allowed and whether the user must approve or clarify anything.
 
-The requested action is checked against the capabilities intentionally exposed by the integration.
+## 5. Execute
 
-## 6. Application execution
+The chosen application integration or global capability performs the operation.
 
-The integration translates the validated request into an operation understood by the target application.
+## 6. Observe the result
 
-## 7. Structured result
+Execution returns an outcome that represents what actually happened, not merely what the model intended.
 
-The integration reports success, failure, warnings, and relevant output in a form that can support continued work.
+## 7. Verify and continue
 
-## 8. Continuity
+For work that changes project state, the runtime can require follow-up inspection or verification before the task is treated as complete.
 
-Useful results can inform the active session so follow-up instructions can remain context-aware.
+## 8. Finish
 
-This is a conceptual developer view, not a production state-machine specification.
+The final response summarizes the observed outcome and leaves the session ready for the next instruction.
+
+During longer jobs, the user can receive progress information and may be able to pause, resume, cancel, approve, or provide requested input.

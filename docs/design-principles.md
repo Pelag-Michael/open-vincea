@@ -1,35 +1,37 @@
 # Design principles
 
-Vincea is designed for AI-assisted work inside professional creative applications, where context, user intent, and real application state all matter.
+## Application state is first-class
 
-## 1. Application-aware, not chat-only
+Creative software has domain state that should be understood directly whenever possible.
 
-A useful assistant should understand that a creative application has its own objects, documents, scenes, timelines, selections, and constraints. Vincea treats application context as part of the working environment rather than as incidental text.
+## Capability before tool name
 
-## 2. Explicit capability boundaries
+The runtime should reason about what needs to be done, while application-specific integration resolves how that capability is expressed in a particular host.
 
-An integration should expose a bounded set of actions. The model should not receive arbitrary authority over the host application.
+## Intent is not authority
 
-## 3. Validate before acting
+A model may propose an operation. Policy and application state still determine whether it can run.
 
-Model output is a proposal for an application action, not an automatic command. Parameters and supported operations should be checked before execution.
+## Observe after mutation
 
-## 4. Preserve user agency
+A successful call does not automatically prove the desired creative result. Important changes should be checked against observed state.
 
-Users should be able to understand what the system is doing, what changed, and where failures occurred.
+## Long-running work must remain controllable
 
-## 5. Provider independence
+Progress, cancellation, user input, and approval are product concerns, not debugging extras.
 
-Application integrations should remain focused on application behavior rather than on one model vendor.
+## Local-first by default
 
-## 6. Continuity without opacity
+Creative work belongs close to the user's applications, files, and project context.
 
-Long-running creative work benefits from session continuity and memory, but integrations should still return clear, inspectable results.
+## Provider independence
 
-## 7. Safe failure
+Application integrations should not need to be redesigned for every model provider.
 
-Unsupported or malformed operations should fail clearly rather than produce ambiguous or partially applied behavior.
+## Safe failure beats ambiguous success
 
-## 8. Public/private separation
+If the system cannot establish what happened, it should report uncertainty rather than invent completion.
 
-Public integration material should be useful on its own without exposing proprietary production implementation details.
+## Public/private separation
+
+Public developer material should explain responsibilities and engineering principles without exposing proprietary production implementation.

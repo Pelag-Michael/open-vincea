@@ -1,58 +1,49 @@
 # Action and result model
 
-Vincea integrations benefit from a predictable separation between an **action request** and an **execution result**.
+Vincea treats **requested action** and **observed result** as different objects conceptually.
 
-## Action request
+## Requested action
 
-Conceptually, an action request communicates:
-
-- the requested operation;
-- the target application scope;
-- validated parameters;
-- optional user-visible intent context.
-
-Illustrative example:
+A requested action expresses what the model wants to attempt:
 
 ```text
-Action
-  operation: "rename_selected_item"
-  parameters:
-    name: "Hero Camera"
+Capability
+  rename the selected item
+
+Input
+  desired name = "Hero Camera"
 ```
 
-This is explanatory notation only, not a production serialization format.
+This notation is illustrative only.
 
-## Execution result
+## Observed result
 
-A result should communicate what actually happened.
+The integration reports what the application actually did:
 
 ```text
-Result
-  status: success
-  summary: "Renamed selected item"
-  affected_items: 1
+Outcome
+  status = success
+  summary = selected item renamed
+  affected items = 1
 ```
 
-For failures:
+A failed operation should instead describe the failure and whether any state changed.
 
-```text
-Result
-  status: failure
-  category: invalid_input
-  summary: "No supported item is selected"
-```
+## Why the separation matters
 
-## Why separate them?
+Model reasoning can be wrong, stale, incomplete, or based on missing application state.
 
-The distinction helps avoid confusing model intent with application reality.
+The application integration is the source of truth for the execution outcome.
 
-The model can request an action, but only the integration can report whether the host application accepted it and what changed.
+## Structured outcomes
 
-## Recommended result qualities
+Useful outcomes can include:
 
-Results should be:
+- success/failure;
+- human-readable summary;
+- affected scope;
+- retryability;
+- verification information;
+- structured application data.
 
-- concise;
-- structured enough for follow-up reasoning;
-- explicit about partial or failed work;
-- careful not to expose sensitive host data unnecessarily.
+Public documentation intentionally omits the production serialization format.

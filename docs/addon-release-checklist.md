@@ -1,18 +1,18 @@
 # Application integration release checklist
 
-Use this checklist before publishing an integration in `addons/`.
+Use this before publishing source under `addons/`.
 
 ## Scope
 
-- [ ] Target application is clearly identified.
-- [ ] Integration can stand on its own as public material.
-- [ ] No dependency on non-public Vincea components is required for understanding the published source.
+- [ ] Target application is identified.
+- [ ] Tested application versions are recorded.
+- [ ] Public source can stand independently from proprietary Vincea components.
 
 ## Documentation
 
 - [ ] Purpose is documented.
-- [ ] Installation steps are documented.
-- [ ] Supported application versions are documented.
+- [ ] Installation is documented.
+- [ ] Capability scope is documented.
 - [ ] Limitations are documented.
 - [ ] Side effects are documented.
 - [ ] Security implications are documented.
@@ -22,29 +22,22 @@ Use this checklist before publishing an integration in `addons/`.
 - [ ] No credentials or secrets.
 - [ ] No private URLs.
 - [ ] No machine-specific absolute paths.
-- [ ] No unnecessary logs.
-- [ ] No caches or generated artifacts.
 - [ ] No user project data.
-- [ ] No private research notes.
+- [ ] No unnecessary logs or test artifacts.
+- [ ] No proprietary product configuration.
 
-## Provenance and licensing
+## Provenance
 
-- [ ] Source provenance is known.
+- [ ] Origin of every significant component is known.
 - [ ] Upstream attribution is preserved.
 - [ ] License compatibility is verified.
-- [ ] Copyright history is not rewritten inaccurately.
+- [ ] Copyright history remains accurate.
 - [ ] Vincea attribution is present where appropriate.
 
-## Safety
+## Engineering
 
 - [ ] Inputs are validated.
+- [ ] Failure behavior is clear.
 - [ ] Destructive operations are documented.
-- [ ] Failure behavior is understandable.
-- [ ] File operations are reviewed for overwrite or path risks.
-- [ ] Network behavior is documented if present.
-
-## Final review
-
-- [ ] Public repository content does not expose proprietary production implementation details.
-- [ ] README links are correct.
-- [ ] Integration documentation matches tested behavior.
+- [ ] Compatibility claims match tested evidence.
+- [ ] Result reporting is sufficient to understand what changed.

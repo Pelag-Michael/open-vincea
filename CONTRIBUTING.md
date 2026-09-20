@@ -1,34 +1,25 @@
-# Contributing to Vincea public materials
+# Contributing
 
-Thank you for contributing to the public Vincea technical repository.
+This repository contains Vincea's public technical and integration material.
 
-## Scope
+Useful contributions include:
 
-Contributions should fit one of these categories:
+- corrections to public technical documentation;
+- improvements to integration safety guidance;
+- compatibility notes backed by testing;
+- provenance or licensing corrections;
+- application integrations whose source can stand independently after review.
 
-- improvements to public technical documentation;
-- corrections to safety or integration guidance;
-- selected application integrations that can stand on their own and pass review;
-- attribution, provenance, or licensing corrections.
+## Requirements
 
-This repository does not contain the complete Vincea product source.
+Before submitting public material:
 
-## Contribution requirements
+1. Keep the change within the public developer boundary.
+2. Remove credentials, secrets, private URLs, machine-specific paths, logs, caches, and user project data.
+3. Preserve upstream copyright and license notices.
+4. State clearly when code was adapted from third-party work.
+5. Do not claim support that has not been tested.
+6. Document side effects and destructive operations.
+7. Keep public examples independent from proprietary Vincea implementation.
 
-Before opening a pull request:
-
-1. Keep the change limited to public-facing material.
-2. Remove credentials, secrets, private URLs, local paths, logs, caches, and unnecessary test artifacts.
-3. Document the origin of any code or assets you did not create.
-4. Preserve upstream copyright and license notices.
-5. Do not apply a new license to third-party work unless compatibility has been verified.
-6. For application integrations, document target application, installation, limitations, permissions, and security implications.
-7. Prefer small, reviewable changes.
-
-## Integration provenance
-
-If an integration is adapted from another project, state that clearly in its directory and preserve the original notices. Vincea project attribution is additive; it does not replace upstream credit.
-
-## Review
-
-A contribution may be held back when provenance, licensing, security, privacy, or independence from non-public Vincea components cannot be established.
+Application integration source may be held back when provenance, licensing, security, or independence cannot be established.

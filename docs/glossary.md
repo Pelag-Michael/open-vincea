@@ -1,49 +1,49 @@
 # Glossary
 
+## AI operator
+
+An AI system designed to carry out multi-step work in a user's environment, not only answer questions.
+
 ## Application integration
 
-A component that connects Vincea-compatible AI-assisted work to a specific professional creative application.
+Code and configuration that allow Vincea to inspect and act inside a specific creative application.
 
 ## Capability
 
-A bounded application function intentionally exposed by an integration.
+A bounded unit of functionality available to the runtime.
 
-## Action
+## Action request
 
-A request to perform one supported capability with defined parameters.
+A model-produced request to perform a supported capability.
 
-## Result
+## Tool outcome
 
-The integration's report of what actually happened after an attempted action.
+The normalized report of what actually happened during execution.
 
-## Application context
+## Verification
 
-Relevant host-application information that helps interpret the user's request.
+A follow-up check used to determine whether the requested creative result is supported by observed state.
 
 ## Session
 
-A working scope that helps relate follow-up requests to recent context and results.
+An isolated conversation and application context used for continued work.
 
-## Memory
+## Job
 
-Longer-lived context that can support continuity across extended work.
+One accepted unit of runtime work that can progress independently of an HTTP request.
 
 ## Provider
 
-An AI model service or execution source used to perform model reasoning.
+A model or media-generation execution source.
 
-## Tool authority
+## Application context
 
-The conceptual responsibility for checking whether a requested application action is supported before it is executed.
+Relevant state from the active creative software or workspace.
 
 ## Side effect
 
-A persistent or observable change caused by an action, such as modifying a scene, document, project, file, or application state.
+A persistent or observable change to a project, document, scene, file, or application.
 
 ## Provenance
 
-The origin and authorship history of source code, assets, or other material.
-
-## Compatibility
-
-The tested relationship between an integration and particular application versions or environments.
+The origin, authorship, and licensing history of code or assets.

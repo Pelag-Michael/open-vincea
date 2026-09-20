@@ -1,40 +1,32 @@
 # Compatibility philosophy
 
-Professional creative applications evolve quickly. Integrations should treat compatibility as an explicit engineering concern.
+Creative applications, operating systems, and provider APIs evolve independently. Vincea treats compatibility as an explicit engineering responsibility.
 
-## Supported versions
+## Per-application support
 
-Each public integration should state the application versions it is known to support.
+Each public integration should identify the application versions it was actually tested against.
 
-Avoid vague claims such as "works everywhere."
+## Different host mechanisms
 
-## Capability differences
+Different applications may use different extension technologies. That is expected.
 
-When host versions expose different functionality, document the difference instead of pretending the behavior is identical.
+Public compatibility should describe user-visible behavior rather than pretending every host has the same implementation shape.
 
 ## Graceful degradation
 
-If a feature is unavailable in an older or restricted environment, the integration should fail clearly or expose a narrower capability set.
+When a capability is unavailable in a specific environment, the integration should expose a smaller honest surface or fail clearly.
 
-## Compatibility matrix
+## Cross-platform behavior
 
-A public integration may maintain a table such as:
+Shared behavior should remain conceptually consistent across operating systems while platform-specific application integration details stay isolated.
 
-| Application version | Core actions | File operations | Notes |
-| --- | --- | --- | --- |
-| Version A | Supported | Supported | Baseline |
-| Version B | Supported | Limited | One API difference |
+## Compatibility claims
 
-Actual values should come from tested integration behavior.
+Use language such as:
 
-## Environment assumptions
+- tested;
+- experimental;
+- partial;
+- unavailable in this edition/version.
 
-Document dependencies that materially affect operation, such as:
-
-- application edition;
-- required extension APIs;
-- supported operating systems;
-- required plugin state;
-- optional external tools.
-
-Compatibility claims should reflect tested reality.
+Avoid universal claims without evidence.

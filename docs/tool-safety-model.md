@@ -1,21 +1,33 @@
 # Tool safety model
 
-AI-generated application actions should not be treated as automatically trustworthy.
+Vincea's safety model starts from a simple rule:
 
-Vincea's public safety model is based on a simple principle: a requested action should be checked against the capability surface that the application integration intentionally exposes before execution.
+> Model-generated intent is not equivalent to permission to execute.
 
-## Developer-facing principles
+## Bounded capability surface
 
-- Expose only actions that are necessary for the integration's purpose.
-- Validate action names and parameters.
-- Reject malformed or unsupported requests.
-- Make destructive or high-impact behavior explicit in documentation.
-- Return clear success and failure information.
-- Keep application permissions as narrow as practical.
-- Avoid silently broadening capability scope.
+The model can only request capabilities intentionally exposed by the active runtime context.
 
-## User-facing principles
+## Runtime policy
 
-Users should understand that integrations can change real application state. Important projects should be backed up or version controlled where appropriate, and users should review the permissions and limitations documented by each integration.
+Before execution, the runtime can apply policy based on the operation, the application context, the route, and the current job/session.
 
-This document describes public safety principles only.
+## Human approval
+
+Higher-risk operations can stop at an approval checkpoint before continuing.
+
+Approval is treated as scoped runtime state rather than as a vague assumption that a user "probably agreed."
+
+## Destructive file recovery
+
+File-changing workflows should preserve a recovery path where practical before destructive modification.
+
+## Application verification
+
+After important mutations, the runtime can inspect structured or visual state to determine whether the requested outcome was actually achieved.
+
+## Failure discipline
+
+Blocked or ambiguous work should remain explicit. The system should not turn a failed operation into a successful-sounding final answer.
+
+This document describes the public safety model, not Vincea's private authorization implementation.

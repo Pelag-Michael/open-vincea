@@ -1,36 +1,27 @@
 # SDK testing philosophy
 
-Public SDK documentation should make testing expectations clear even when the implementation itself is not published.
-
-## Core expectations
-
-An integration should be tested for:
-
-- valid capability execution;
-- invalid parameter rejection;
-- unsupported operation handling;
-- missing application state;
-- host-application failures;
-- version compatibility;
-- side-effect reporting;
-- destructive-operation safeguards.
+A public integration contract is only useful when its observable behavior can be tested.
 
 ## Contract tests
 
-For each capability, tests should establish that the documented inputs and outputs match observed behavior.
+Confirm that documented capabilities accept valid inputs and reject invalid inputs.
 
-## Host tests
+## Host behavior tests
 
-Where practical, verify the resulting application state rather than only checking that a function returned successfully.
+Verify application state after execution, not only a successful return value.
+
+## Failure tests
+
+Cover missing selections, closed documents, incompatible versions, permission problems, and host-side rejection.
+
+## Mutation tests
+
+For operations that change state, verify both the intended result and failure recovery expectations.
+
+## Compatibility tests
+
+Record which application versions and environments were actually exercised.
 
 ## Regression tests
 
-When a real integration bug is fixed, add coverage that reproduces the failure condition.
-
-## Release confidence
-
-Testing should support a clear public claim such as:
-
-"These capabilities were verified against these application versions under these conditions."
-
-Avoid unsupported universal compatibility claims.
+When a real integration bug is fixed, keep a test that reproduces the previous failure condition.

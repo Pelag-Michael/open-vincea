@@ -1,39 +1,33 @@
 # Adapter concepts
 
-An adapter is the developer-facing concept that translates between Vincea-style application actions and the host application's own extension surface.
+An adapter is the public concept of a component that translates a Vincea capability into behavior supported by a particular host application.
 
-This document is explanatory only.
-
-## Conceptual responsibilities
+## Responsibilities
 
 An adapter should know:
 
 - what application it targets;
 - which capabilities it supports;
-- how to validate capability parameters;
-- how to perform supported host operations;
-- how to report results.
+- how to validate application-specific inputs;
+- how to call the host application's extension surface;
+- how to convert host results into understandable outcomes.
 
-## Illustrative interface
+## Conceptual shape
 
 ```text
-ApplicationAdapter
-  describe_capabilities()
-  validate(action)
-  execute(action)
-  report(result)
+Application Adapter
+  describe capabilities
+  validate request
+  execute supported action
+  observe result
 ```
 
-This is pseudocode for discussion, not a production interface.
+This is explanatory notation only.
 
-## Keep host behavior local
+## Keep the host boundary narrow
 
-Application-specific assumptions should remain inside the integration layer rather than leaking into unrelated higher-level logic.
+The adapter should not own model-provider logic, cross-application product policy, or unrelated product state.
 
-## Avoid generic escape hatches
+## Prefer application semantics
 
-A strong adapter exposes meaningful application operations rather than one unrestricted execution function.
-
-## Results matter
-
-The adapter should report application reality: success, failure, warnings, and affected scope.
+A useful adapter exposes meaningful application operations and inspection rather than forcing every workflow through generic screen coordinates.

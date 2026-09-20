@@ -1,37 +1,37 @@
 # Action validation example
 
-This example shows the reasoning pattern for validating an application action before execution.
-
-It is intentionally pseudocode.
+Illustrative pseudocode:
 
 ```text
-receive proposed action
+receive action request
 
-if operation is not supported:
-    return unsupported_operation
+if capability is unavailable:
+    return unsupported
 
-if required input is missing:
+if required input is invalid:
     return invalid_input
 
-if current application state does not satisfy preconditions:
-    return missing_application_state
+if application preconditions are not met:
+    return missing_state
 
-if parameters violate application constraints:
-    return invalid_input
+if user approval is required:
+    pause for approval
 
-perform supported host operation
+perform host operation
 
-return structured result
+observe resulting application state
+
+return structured outcome
 ```
 
-## Why this pattern matters
+## Why validation matters
 
-Model output can be syntactically plausible while still being inappropriate for the current application state.
+A model can produce a plausible operation that is wrong for the current application state.
 
 Validation separates:
 
-- what the model wants to do;
-- what the integration supports;
-- what the host application can actually do right now.
-
-The result should always describe the observed outcome rather than assuming success.
+- what the model wants;
+- what Vincea currently exposes;
+- what the user has approved;
+- what the host application can actually do;
+- what the application ultimately reports.

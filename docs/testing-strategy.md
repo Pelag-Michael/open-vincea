@@ -1,48 +1,50 @@
 # Testing strategy
 
-Testing a professional-application integration is not only about checking the happy path. It should also establish that failures are predictable and side effects are controlled.
+The private Vincea implementation contains a broad regression surface around runtime behavior, session lifecycle, application interaction, vision, provider formatting, job control, safety, and integration contracts.
 
-## Test layers
+The public lesson is more important than any one test count: agentic creative software needs tests at several boundaries.
 
-### Contract-level tests
+## Runtime tests
 
-Confirm that supported operations accept valid inputs and reject malformed or unsupported inputs.
+Cover:
 
-### Application behavior tests
+- job creation and terminal states;
+- pause/resume/cancel behavior;
+- approval and user-input checkpoints;
+- recovery after interruption;
+- session isolation;
+- tool outcome normalization.
 
-Verify that operations produce the expected application state.
+## Provider-format tests
 
-### Compatibility tests
+The same capability description may need different schema or message translation for different model providers.
 
-Check supported application versions and document version-specific limitations.
+Changes to the shared capability surface should therefore be checked across provider adapters.
 
-### Failure-path tests
+## Application integration tests
 
-Exercise cases such as:
+Cover:
 
-- missing selection;
-- closed or invalid document;
-- inaccessible file;
-- unsupported object type;
-- application-side rejection;
-- unavailable dependency.
+- input validation;
+- application state inspection;
+- mutation behavior;
+- error handling;
+- version differences;
+- structured result shape.
 
-### Destructive-operation tests
+## Vision and media tests
 
-For save, overwrite, delete, replace, or batch-modification behavior, verify warnings and recovery expectations.
+Visual workflows need coverage for:
 
-### Result-quality tests
+- image references;
+- session continuity;
+- screenshot or image result handling;
+- large/binary output hygiene.
 
-Ensure integrations report enough information to understand what changed.
+## Safety regression tests
 
-## Determinism
+High-risk behavior should have explicit regression coverage around approval, session boundaries, destructive operations, and execution ownership.
 
-Where host behavior allows it, keep test fixtures small and repeatable.
+## Reality check
 
-## What public tests should demonstrate
-
-Public test material should demonstrate engineering expectations without exposing non-public implementation details.
-
-## Release gate
-
-An integration should not be published merely because it works on one machine once. Compatibility, provenance, security, and repeatable behavior all matter.
+The existence of tests does not mean every application integration has identical maturity, nor does it mean every development snapshot is globally green. Public compatibility claims should be based on targeted verified evidence.

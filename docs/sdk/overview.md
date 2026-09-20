@@ -1,40 +1,37 @@
 # Vincea Integration SDK — concept overview
 
-The Vincea Integration SDK is described here as a **developer concept**, not as a published implementation.
+This section documents a **developer concept**, not a published production SDK.
 
-Its purpose is to provide a consistent way to think about application integrations.
+The goal is to describe what a stable public integration layer would need to express without copying Vincea's internal interfaces.
 
 ## Conceptual responsibilities
 
-A developer-facing integration layer would help an application integration describe:
+A developer-facing integration layer should make it possible to describe:
 
-- application identity;
-- available capabilities;
+- target application identity;
+- capabilities;
 - action inputs;
-- execution results;
-- lifecycle state;
-- compatibility metadata.
-
-## What this repository provides
-
-This repository provides documentation for these concepts so developers can understand the intended design philosophy.
-
-It does **not** provide an executable SDK implementation or production interface definition.
+- execution outcomes;
+- compatibility information;
+- lifecycle/health information.
 
 ## Conceptual flow
 
 ```mermaid
 flowchart LR
-    A[Application Integration] --> B[Capability Description]
-    B --> C[Validated Action]
-    C --> D[Host Application]
-    D --> E[Execution Result]
+    V[Vincea Runtime] --> C[Capability]
+    C --> A[Application Adapter]
+    A --> H[Host Application]
+    H --> R[Observed Result]
+    R --> V
 ```
 
 ## Design goals
 
-- application-specific behavior stays close to the application integration;
-- capability boundaries remain explicit;
-- validation happens before host execution;
-- results remain understandable;
-- integrations can be tested independently.
+- application-specific behavior stays close to the application adapter;
+- capabilities remain bounded;
+- inputs are validated;
+- results describe application reality;
+- provider choice does not leak into the host adapter.
+
+This repository intentionally does not publish executable SDK code or production protocol formats.

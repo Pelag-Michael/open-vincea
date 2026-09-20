@@ -1,60 +1,46 @@
 # Example integration walkthrough
 
-This walkthrough illustrates how a developer might reason about a small application integration without publishing an executable Vincea implementation.
+This example illustrates the public integration model without publishing executable Vincea integration code.
 
 ## Goal
 
-Suppose an application integration wants to support renaming the currently selected item.
+Support renaming the currently selected item in a creative application.
 
 ## 1. Define the capability
 
-Name the operation clearly:
-
 ```text
-rename_selected_item
+rename selected item
 ```
 
-## 2. Define the input
-
-The action needs one input:
-
-```text
-name: non-empty string
-```
-
-## 3. Define the precondition
+## 2. Define the precondition
 
 Exactly one supported item must be selected.
 
-## 4. Define the side effect
+## 3. Define the input
 
-The selected item's name changes in the host application.
+```text
+new name: non-empty text
+```
 
-## 5. Validate before execution
+## 4. Validate
 
-Reject:
+Reject the request when:
 
-- empty names;
-- unsupported selections;
-- requests with no active document;
-- values the host application cannot accept.
+- no document is active;
+- the selection is missing;
+- the selected item cannot be renamed;
+- the requested name violates host constraints.
 
-## 6. Execute through the host application
+## 5. Execute
 
 Use the application's supported extension or scripting mechanism.
 
-## 7. Report the result
+## 6. Observe
 
-A successful result might state:
+Read the item back from the application after the operation.
 
-```text
-status: success
-summary: "Renamed selected item"
-affected_items: 1
-```
+## 7. Report
 
-A failure should explain why the operation did not run and whether application state changed.
+Return whether the operation succeeded, what changed, and any warning.
 
-## What this example demonstrates
-
-Even a small integration benefits from explicit capability scope, preconditions, validation, side-effect documentation, and structured results.
+The important pattern is **intent → validation → host action → observed result**, not a particular wire format.

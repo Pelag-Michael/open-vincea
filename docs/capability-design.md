@@ -1,57 +1,37 @@
 # Capability design
 
-A capability is a bounded unit of application functionality that an integration intentionally makes available.
+A capability is a bounded operation that Vincea can reason about independently of a specific provider.
 
-## Good capability characteristics
+Examples at a public level include:
+
+- inspect workspace state;
+- inspect selected entities;
+- execute a supported application action;
+- capture visual state;
+- verify a change;
+- read or modify workspace files;
+- create or inspect generated media.
+
+## Properties of a good capability
 
 A capability should be:
 
-- **specific** enough that its purpose is obvious;
-- **bounded** so it cannot silently expand into unrelated authority;
-- **validatable** before application execution;
-- **documented** with expected side effects;
-- **observable** through a meaningful result.
+- **purposeful** — it maps to a real workflow need;
+- **bounded** — it does not silently grant unrelated authority;
+- **validatable** — its inputs can be checked before execution;
+- **observable** — the result can be inspected;
+- **documented** — side effects and limitations are understandable.
 
-## Prefer intent-oriented capabilities
+## Application-specific resolution
 
-Prefer a capability that reflects a real user action over a generic escape hatch.
+Different applications can satisfy the same high-level intent through different APIs or extension mechanisms.
 
-Good examples:
+The public model therefore separates the capability from the concrete host operation.
 
-- create a supported scene object;
-- rename a selected item;
-- read the current frame range;
-- export a supported document format.
+## Mutations and verification
 
-Avoid capabilities that effectively mean "run arbitrary host code" unless the entire purpose of the integration explicitly requires that level of authority and the risk is clearly documented.
+Capabilities that change state should make it possible to verify the resulting state.
 
-## Inputs
+That may mean structured application inspection, visual inspection, or another application-appropriate check.
 
-Inputs should have explicit meaning, narrow types, and known validation rules.
-
-Useful constraints include:
-
-- required vs optional fields;
-- allowed ranges;
-- supported enumerations;
-- host-application object identifiers;
-- expected units;
-- file-path restrictions when relevant.
-
-## Side effects
-
-Every capability should make its side effects understandable. If it can overwrite, delete, export, save, or permanently modify application state, say so.
-
-## Results
-
-Return enough information for the user and the next interaction to understand what happened.
-
-A useful result often includes:
-
-- outcome status;
-- affected object or document;
-- warnings;
-- error category when unsuccessful;
-- small amounts of relevant output.
-
-The public repository intentionally does not define production capability schemas.
+This repository does not publish Vincea's production capability schemas.

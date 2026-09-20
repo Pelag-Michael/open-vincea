@@ -1,157 +1,131 @@
 # Vincea
 
-Vincea is an AI interaction layer for professional creative applications. It is designed to help AI understand application context, work with user intent, and perform approved actions inside professional workflows.
+**Vincea is a local-first AI operator for professional creative software.**
 
-> This repository is the public technical/developer surface of Vincea. It is not a full source distribution of the product.
+It is designed to understand the working context inside creative applications, reason about a user's goal, and carry out multi-step work through application-aware integrations instead of treating the software as a generic chat destination.
 
-## Why Vincea exists
+> This repository is Vincea's public technical/developer surface. It is not a full source distribution of the product.
 
-Creative applications are not ordinary chat surfaces. They contain documents, scenes, timelines, selections, object graphs, project state, application-specific rules, and operations with real side effects.
+## What makes the problem different
 
-Vincea is designed around that reality.
+Professional creative applications contain real project state: scenes, layers, timelines, selections, materials, cameras, documents, assets, and application-specific rules.
 
-Instead of treating the host application as a passive destination, Vincea treats application context, bounded capabilities, validation, execution results, and session continuity as first-class parts of AI-assisted work.
+Vincea is built around four ideas:
 
-## System view
+- **Application-aware context** — the AI works with the state of the active creative workflow.
+- **Capability-based actions** — application operations are exposed as bounded capabilities rather than arbitrary authority.
+- **Policy and human approval** — higher-risk actions can require explicit user involvement.
+- **Verification after action** — requested work and observed application state are treated as different things.
+
+When a native application integration is not available for a particular task, Vincea can also use a screen-based interaction fallback. It additionally supports generative-asset workflows for producing media that can be brought back into a creative project.
+
+## Public system view
 
 ```mermaid
 flowchart LR
-    U[User] --> V[Vincea]
-    V --> R[AI Runtime]
-    R --> T[Tool Authority]
-    T --> I[Application Integration]
+    U[User] --> UI[Desktop Experience]
+    UI --> J[Session & Job Runtime]
+    J --> M[Model Provider Layer]
+    M --> C[Capability Runtime]
+    C --> P[Policy & Approval]
+    P --> I[Application Integration]
     I --> A[Creative Application]
-    A --> X[Structured Result]
-    X --> V
+    A --> R[Observed Result]
+    R --> V[Verification & Continuity]
+    V --> J
 ```
 
-The public architecture documentation intentionally stays at a system-concept level. It explains responsibilities, safety boundaries, and developer design principles without exposing proprietary production implementation details.
+This diagram is deliberately conceptual. Production implementation, distribution, activation, and private infrastructure are outside the scope of this repository.
 
-Vincea uses proprietary runtime, distribution, activation, and production infrastructure that are outside the scope of this repository.
+## What the runtime is designed to do
 
-## Request lifecycle
+A Vincea task may span multiple model/tool turns. The runtime is designed around long-running work rather than a single request/response:
 
-```mermaid
-flowchart LR
-    A[User Intent] --> B[Application Context]
-    B --> C[AI Reasoning]
-    C --> D[Proposed Action]
-    D --> E[Validation]
-    E --> F[Application Integration]
-    F --> G[Host Application]
-    G --> H[Result]
-    H --> I[Session Continuity]
-```
+- session-scoped work;
+- background job execution;
+- progress events;
+- pause, resume, and cancellation;
+- user-input and approval checkpoints;
+- provider-independent model execution;
+- application capabilities plus global workspace/vision/media capabilities;
+- structured tool outcomes;
+- post-action verification;
+- context continuity across follow-up work.
 
-Read the full conceptual lifecycle in [docs/request-lifecycle.md](docs/request-lifecycle.md).
+Read [Runtime concepts](docs/runtime-concepts.md) and [Request lifecycle](docs/request-lifecycle.md).
 
-## Core design principles
+## Application integrations
 
-Vincea's public developer model emphasizes:
+The private implementation contains integration work across 3D/DCC, design, video, CAD, game-engine, and texturing applications.
 
-- application-aware AI interaction rather than chat-only behavior;
-- explicit capability boundaries;
-- validation before application execution;
-- clear side-effect reporting;
-- provider-independent integration design;
-- session continuity without hiding application reality;
-- safe, understandable failure;
-- strict separation between public integration material and proprietary production implementation.
+Examples include Blender, Maya, Houdini, Unreal Engine, 3ds Max, Cinema 4D, AutoCAD, Fusion 360, Photoshop, Illustrator, After Effects, Premiere Pro, DaVinci Resolve, SketchUp, and Substance applications.
 
-See [docs/design-principles.md](docs/design-principles.md).
+Presence of integration work does **not** mean every application has the same maturity or feature depth. Public releases are reviewed independently.
+
+See [Application landscape](docs/application-landscape.md).
+
+## Generative assets
+
+Vincea also includes a creative asset-generation layer for image, video, audio/music, voice, and 3D workflows. Generated assets are intended to become part of the same local creative workflow rather than a disconnected generation experience.
+
+See [Generative asset workflows](docs/generative-assets.md).
 
 ## Technical documentation
 
-### Architecture and runtime
+### System model
 
+- [Product overview](docs/product-overview.md)
 - [Architecture overview](docs/architecture-overview.md)
 - [Request lifecycle](docs/request-lifecycle.md)
 - [Runtime concepts](docs/runtime-concepts.md)
 - [Design principles](docs/design-principles.md)
-- [Sessions and memory](docs/sessions-and-memory.md)
-- [Provider abstraction](docs/provider-abstraction.md)
 
-### Actions, capabilities, and safety
+### Capabilities, results, and safety
 
 - [Capability design](docs/capability-design.md)
 - [Action and result model](docs/action-result-model.md)
-- [Error model](docs/error-model.md)
 - [Tool safety model](docs/tool-safety-model.md)
+- [Error model](docs/error-model.md)
 - [Security model](docs/security-model.md)
-- [Security for integration authors](docs/security-for-integration-authors.md)
+
+### Context and providers
+
+- [Sessions and memory](docs/sessions-and-memory.md)
+- [Provider abstraction](docs/provider-abstraction.md)
 
 ### Integration engineering
 
 - [Integration concepts](docs/integration-concepts.md)
+- [Application landscape](docs/application-landscape.md)
 - [Integration authoring guide](docs/integration-authoring-guide.md)
 - [Testing strategy](docs/testing-strategy.md)
 - [Compatibility philosophy](docs/compatibility-philosophy.md)
-- [Application integration release checklist](docs/addon-release-checklist.md)
-- [Provenance and licensing](docs/provenance-and-licensing.md)
 
-### SDK concepts
+### Developer concepts
 
-The SDK material in this repository is documentation only. It describes developer concepts without publishing an executable SDK implementation or production interface definition.
+The SDK material is documentation-only. It does not publish Vincea's production implementation or wire formats.
 
 - [SDK concept overview](docs/sdk/overview.md)
 - [Adapter concepts](docs/sdk/adapter-concepts.md)
 - [Tool contract concepts](docs/sdk/tool-contract-concepts.md)
-- [SDK testing philosophy](docs/sdk/testing-philosophy.md)
+- [Testing philosophy](docs/sdk/testing-philosophy.md)
 
-### Examples
+### Release discipline
 
-Examples are intentionally illustrative rather than production implementation code.
-
-- [Integration walkthrough](docs/examples/integration-walkthrough.md)
-- [Action validation example](docs/examples/action-validation.md)
-
-### Reference
-
-- [Glossary](docs/glossary.md)
-- [Documentation map](docs/README.md)
-
-## Public application integrations
-
-The [addons/](addons/) area is reserved for selected application integrations that have passed provenance, licensing, security, privacy, and independence review.
-
-Each published integration should document:
-
-- target application;
-- purpose;
-- installation;
-- supported versions;
-- limitations;
-- side effects;
-- security implications;
-- provenance;
-- licensing and upstream attribution.
-
-No integration source is published merely because it exists internally.
+- [Security for integration authors](docs/security-for-integration-authors.md)
+- [Provenance and licensing](docs/provenance-and-licensing.md)
+- [Application integration release checklist](docs/addon-release-checklist.md)
 
 ## Public vs proprietary
 
-This repository publishes selected technical material and selected independently auditable application integrations.
+This repository intentionally documents architecture responsibilities, design principles, integration guidance, and selected audited integrations.
 
-The product's proprietary production implementation remains outside this repository.
+Vincea uses proprietary runtime, distribution, activation, and production infrastructure that are outside the scope of this repository.
 
-## Safety
-
-Application integrations can modify professional projects, documents, scenes, files, or other user data.
-
-Use backups or version control where appropriate, review permissions carefully, understand integration limitations, and review the data-handling terms of any external AI provider you configure.
-
-See [SECURITY.md](SECURITY.md).
-
-## Contributing
-
-See [CONTRIBUTING.md](CONTRIBUTING.md).
-
-Contributions must preserve provenance, upstream attribution, licensing requirements, and public/private boundaries.
-
-## Project attribution
+## Attribution
 
 **Vincea**
 
 Originally created and developed by **Michael Vo — Pelago**
 
-GitHub: https://github.com/Pelag-Michael
+https://github.com/Pelag-Michael

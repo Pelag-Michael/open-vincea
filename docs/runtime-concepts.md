@@ -1,23 +1,46 @@
 # Runtime concepts
 
-Vincea turns user requests into bounded AI-assisted work inside professional applications.
+Vincea's runtime is built for agent-style work inside stateful creative environments.
 
-## Request lifecycle
+## Jobs
 
-At a public-concept level, a request moves through three concerns:
+A job represents one accepted unit of user work.
 
-1. understand the user's intent and relevant application context;
-2. perform model reasoning for the requested task;
-3. validate and execute application actions through an integration.
+A job can move through states such as queued, running, paused, waiting for user involvement, completed, failed, or cancelled.
 
-Work is handled as isolated execution activity so that a request can have a clear scope, lifecycle, and result.
+The public concept matters more than the exact internal state machine: long-running work remains observable and controllable instead of occupying an opaque request.
 
-## Context
+## Runtime events
 
-Vincea can compose context from information such as the active application, the current session, and the capabilities exposed by an integration. Public documentation does not define production prompt content or implementation algorithms.
+Jobs can emit ordered progress events. The desktop experience can use those events to show what phase of work is occurring without exposing private model reasoning.
 
-## Results
+## Tool loop
 
-An execution can produce explanatory output, structured results, or approved application actions. Integrations should make side effects understandable to users and should document limitations.
+The model can perform multiple turns of:
 
-Vincea uses proprietary runtime, distribution, activation, and production infrastructure that are outside the scope of this repository.
+1. inspect context;
+2. request an action;
+3. receive the actual result;
+4. decide whether more work is required.
+
+The loop ends when the task is complete, cancelled, blocked, or reaches a runtime limit.
+
+## Capability surface
+
+The available action surface combines:
+
+- application-specific capabilities;
+- global workspace capabilities;
+- knowledge and context capabilities;
+- visual/media capabilities;
+- generative asset capabilities.
+
+The exact surface can vary with the active application and runtime context.
+
+## User checkpoints
+
+Some operations require explicit approval or missing user input. These checkpoints are runtime events, not informal text conventions.
+
+## Verification
+
+The runtime distinguishes "an action was requested" from "the intended result was observed." This distinction is especially important after mutations to a scene, document, file, or project.

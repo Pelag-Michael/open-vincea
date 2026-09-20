@@ -1,31 +1,37 @@
 # Security model
 
-Vincea's public security model focuses on minimizing unnecessary authority and making application side effects understandable.
+Vincea is powerful because it can affect real creative work. The public security model therefore focuses on constraining and observing authority rather than pretending the environment has no risk.
 
-## Core principles
+## Capability minimization
 
-### Narrow capability exposure
+Only expose operations needed for the workflow.
 
-An integration should expose only the application operations needed for its intended use.
+## Validation
 
-### Input validation
+Check model-produced inputs before host execution.
 
-Application actions should validate supported operations and parameters before execution.
+## User checkpoints
 
-### Clear side effects
+Require explicit user involvement where the operation carries meaningful risk or needs clarification.
 
-Documentation should identify operations that can change projects, documents, scenes, files, or other persistent application state.
+## Session and job isolation
 
-### Local-first interfaces where appropriate
+Runtime work should remain bound to the intended session and application context.
 
-When a target application supports a local interface and remote exposure is unnecessary, keeping that interface local can reduce avoidable network exposure.
+## Recovery
 
-### Provider awareness
+Destructive workflows should preserve a practical recovery path where possible.
 
-External AI provider data handling depends on the provider and user configuration. Users and organizations should review those terms for their own requirements.
+## Verification
 
-### Recovery
+Important mutations should be followed by application-appropriate checks.
 
-Important professional work should use backups, version control, or application-native recovery features where appropriate.
+## Secret separation
 
-This repository documents public principles rather than private production security implementation.
+Credentials should stay out of model prompts, public logs, examples, and repositories.
+
+## Local-first posture
+
+Application execution and project context are designed to remain on the user's machine, while external provider data handling depends on the provider the user chooses.
+
+This document does not describe private production security algorithms.

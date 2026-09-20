@@ -2,20 +2,23 @@
 
 This directory is reserved for selected application integrations that pass public-release review.
 
-An integration should only be published here when its source is available for review and all of the following are established:
+The private Vincea implementation contains application-integration work across multiple creative software families, but source is not copied here automatically.
 
-- target application and purpose;
-- installation instructions;
-- limitations and compatibility notes;
-- security implications and permissions;
+A public integration must establish:
+
+- target application and tested versions;
+- purpose and capability scope;
+- installation steps;
+- limitations and known side effects;
+- security implications;
 - source provenance;
 - license compatibility;
-- preservation of upstream notices and copyright history;
-- independence from non-public Vincea components.
+- preservation of upstream attribution;
+- independence from proprietary Vincea components.
 
-## Required Vincea attribution
+## Attribution
 
-Published Vincea integrations should include:
+For Vincea-origin work:
 
 **Vincea**
 
@@ -23,6 +26,6 @@ Originally developed for Vincea by **Michael Vo — Pelago**
 
 https://github.com/Pelag-Michael
 
-This attribution is additive. If an integration is adapted from third-party open-source work, the upstream attribution and license must remain intact.
+This attribution is additive. Third-party notices and copyright history must remain intact.
 
-No integration source is included here until that review has been completed.
+No integration source is published here until its individual review is complete.

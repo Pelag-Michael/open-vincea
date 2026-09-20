@@ -1,24 +1,34 @@
 # Sessions and memory
 
-Professional creative work often spans many turns rather than a single prompt. Vincea is designed to support continuity and context-aware work across an active interaction.
+Creative work is conversational but also stateful. Vincea therefore separates short-term session continuity from longer-lived knowledge and memory concepts.
 
 ## Sessions
 
-A session provides a working scope in which Vincea can relate new requests to relevant prior context.
+A session binds an ongoing conversation to application context.
 
-Useful session context can include:
+A session can carry:
 
-- the current application or document;
-- prior user instructions;
-- recent results;
-- currently available integration capabilities.
+- conversation items;
+- the active creative application context;
+- model continuity;
+- job ownership;
+- visual references associated with the work.
 
-## Memory
+Runtime jobs are tied to an accepted session identity so stale or mismatched work does not silently continue against the wrong context.
 
-Memory can help retain useful context across longer work without requiring the user to restate everything repeatedly.
+## Memory and knowledge
 
-Public documentation intentionally stays at the behavioral level. It does not specify production storage layout, selection logic, ranking, compaction, or retrieval implementation.
+Vincea can expose memory and knowledge capabilities for information the user wants to reuse across work.
 
-## Developer implication
+At a public level, these capabilities support:
 
-Application integrations should return concise, structured, and meaningful results because clear results make continued work easier to understand and safer to resume.
+- saving useful context;
+- recalling prior context;
+- searching known information;
+- continuing earlier work.
+
+## Visual continuity
+
+Visual workflows can also preserve useful image references so later turns can reason about prior visual context.
+
+The production storage layout, retrieval strategy, ranking, compaction, and selection heuristics are not published here.

@@ -1,17 +1,33 @@
 # Provider abstraction
 
-Vincea is designed to avoid coupling the product concept to a single AI provider.
+Vincea is designed so the creative application layer does not depend on a single AI provider.
 
-## Why abstraction matters
+## Why this matters
 
-Different users and workflows may require different model capabilities, commercial terms, latency characteristics, privacy options, or organizational policies.
+Different users may care about:
 
-A provider-independent design allows Vincea to reason about model execution at a product level while keeping application integrations focused on their own capabilities.
+- model capability;
+- latency;
+- context length;
+- cost;
+- privacy terms;
+- organizational policy;
+- local vs hosted execution.
 
-## Public boundary
+The runtime therefore treats provider/model execution as a separate responsibility from application integration.
 
-This repository documents the provider-independent concept only. It does not define credential handling, authentication behavior, provider-specific execution internals, or production configuration.
+## Provider-facing responsibilities
 
-## Integration guidance
+At a public level, the provider layer is responsible for:
 
-Application integrations should avoid embedding assumptions about a specific AI provider whenever those assumptions are unrelated to the target application's behavior.
+- submitting model input;
+- translating available capabilities into the provider's supported tool format;
+- returning model text and action requests;
+- preserving provider-appropriate conversation context;
+- reporting usage and failure information.
+
+## Application independence
+
+A Blender operation should still be a Blender operation whether the reasoning model comes from one provider or another.
+
+This repository does not publish credential routing, private authentication flows, token locations, or provider-specific production internals.

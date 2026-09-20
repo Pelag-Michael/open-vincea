@@ -1,18 +1,20 @@
 # Security
 
-Vincea integrations may interact with professional applications and can cause real changes to projects, documents, scenes, or other working data.
+Vincea is designed to perform real work in professional creative applications. That means integrations can modify projects, scenes, documents, timelines, assets, and files.
 
 ## User guidance
 
 - Keep backups or version-controlled copies of important work.
-- Review the permissions and actions exposed by an integration before use.
-- Prefer local-only application interfaces when that is appropriate for the target application.
-- Do not assume an integration is a sandbox unless its documentation explicitly establishes that property.
-- External AI provider data handling depends on the provider and the user's configuration.
-- Avoid placing secrets, credentials, private project data, or sensitive files in public bug reports.
+- Review approval prompts and requested actions.
+- Understand the permissions of the active application integration.
+- Treat generated or automated changes as work that should be reviewed before final delivery.
+- Review the data-handling terms of the AI provider you configure.
+- Do not publish credentials, private project data, or sensitive logs in bug reports.
 
-## Reporting a security issue
+Vincea is not described here as a sandbox. Its usefulness depends on meaningful access to the user's working environment, so safety is built around bounded capabilities, validation, approval, recovery, and verification.
 
-Please avoid publishing sensitive vulnerability details in a public issue. Use an appropriate private contact method associated with the project maintainer's GitHub profile when disclosure requires confidentiality.
+## Vulnerability reporting
 
-Public security documentation describes expected behavior and developer responsibilities, not private production security implementation.
+Do not publish sensitive vulnerability details in a public issue. Use an appropriate private contact path associated with the maintainer's GitHub profile when confidential disclosure is required.
+
+This repository documents public security principles only, not private production security implementation.

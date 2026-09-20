@@ -1,44 +1,34 @@
 # Tool contract concepts
 
-A tool contract is the public concept of describing what an application action accepts and what it returns.
+A public tool contract describes the meaning of a capability without exposing Vincea's production schema.
 
-This document does not define production schemas or serialization.
+A useful contract answers:
 
-## Conceptual contract
-
-A useful tool description answers:
-
-- What does this action do?
+- What does this capability do?
 - What inputs are required?
-- What inputs are optional?
-- What values are valid?
-- What application state is required?
-- What side effects can occur?
-- What does success look like?
+- What application state must exist?
+- Does it mutate state?
+- What risks or approvals may apply?
+- How can success be observed?
 - What failure categories are expected?
 
-## Illustrative example
+## Example
 
 ```text
-Capability: rename_selected_item
-
-Inputs
-  name: non-empty string
+Capability
+  rename selected item
 
 Precondition
   one supported item is selected
 
-Side effect
-  selected item name changes
+Input
+  new name
 
-Result
-  status
-  summary
-  affected_items
+Side effect
+  selected item changes
+
+Verification
+  inspect selected item name
 ```
 
-The example is intentionally descriptive and does not represent a production schema.
-
-## Why contracts help
-
-Clear contracts make validation, testing, documentation, and safe failure easier.
+This is conceptual documentation, not a serialization format.
